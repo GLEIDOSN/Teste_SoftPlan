@@ -11,15 +11,16 @@ object fDatasetLoop: TfDatasetLoop
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object DBGrid1: TDBGrid
+  object dbgr1: TDBGrid
     Left = 80
     Top = 80
     Width = 441
     Height = 201
-    DataSource = DataSource1
+    DataSource = ds1
     TabOrder = 0
     TitleFont.Charset = DEFAULT_CHARSET
     TitleFont.Color = clWindowText
@@ -27,24 +28,24 @@ object fDatasetLoop: TfDatasetLoop
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
   end
-  object Button1: TButton
+  object btnDeletarPares: TButton
     Left = 80
     Top = 18
     Width = 105
     Height = 25
     Caption = 'Deletar pares'
     TabOrder = 1
-    OnClick = Button1Click
+    OnClick = btnDeletarParesClick
   end
-  object DBNavigator1: TDBNavigator
+  object dbNav1: TDBNavigator
     Left = 80
     Top = 49
-    Width = 240
+    Width = 440
     Height = 25
-    DataSource = DataSource1
+    DataSource = ds1
     TabOrder = 2
   end
-  object ClientDataSet1: TClientDataSet
+  object cds1: TClientDataSet
     Aggregates = <>
     FieldDefs = <
       item
@@ -62,8 +63,8 @@ object fDatasetLoop: TfDatasetLoop
     Left = 312
     Top = 152
   end
-  object DataSource1: TDataSource
-    DataSet = ClientDataSet1
+  object ds1: TDataSource
+    DataSet = cds1
     Left = 392
     Top = 152
   end

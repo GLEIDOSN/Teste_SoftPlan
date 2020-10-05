@@ -11,6 +11,7 @@ object fStreams: TfStreams
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -28,23 +29,23 @@ object fStreams: TfStreams
     Height = 13
     Caption = 'Size: '
   end
-  object Button1: TButton
+  object btnLoad1: TButton
     Left = 8
     Top = 8
     Width = 75
     Height = 25
     Caption = 'Load 1'
     TabOrder = 0
-    OnClick = Button1Click
+    OnClick = btnLoad1Click
   end
-  object Button2: TButton
+  object btnLoad100: TButton
     Left = 8
     Top = 40
     Width = 75
     Height = 25
     Caption = 'Load 100'
     TabOrder = 1
-    OnClick = Button2Click
+    OnClick = btnLoad100Click
   end
   object ProgressBar1: TProgressBar
     AlignWithMargins = True
@@ -54,8 +55,5 @@ object fStreams: TfStreams
     Height = 17
     Align = alBottom
     TabOrder = 2
-    ExplicitLeft = 248
-    ExplicitTop = 160
-    ExplicitWidth = 150
   end
 end

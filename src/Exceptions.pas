@@ -3,8 +3,10 @@ unit Exceptions;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls;
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, System.Diagnostics,
+  System.Threading;
 
 type
   TfExceptions = class(TForm)
@@ -23,6 +25,7 @@ type
     FPath: string;
 
     function LoadNumbers(AIgnore: Integer): Boolean;
+    procedure WriteMemoException(E: Exception);
   public
   end;
 
@@ -35,23 +38,24 @@ implementation
 
 procedure TfExceptions.Button1Click(Sender: TObject);
 var
-  t1, t2: Integer;
+  LStopWatch: TStopWatch;
 begin
   try
     Memo1.Lines.Clear;
     Memo2.Lines.Clear;
 
     try
-      t1 := GetTickCount;
+      LStopWatch := TStopWatch.StartNew;
       LoadNumbers(1);
     finally
-      t1 := GetTickCount - t1;
-      Label1.Caption := 'Tempo de processamento: ' + t1.ToString + ' ms';
+      LStopWatch.Stop;
+      Label1.Caption := 'Tempo de processamento: ' +
+        IntToStr(LStopWatch.ElapsedMilliseconds) + ' ms';
     end;
-  except on E: Exception do
+  except
+    on E: Exception do
     begin
-      Memo1.Lines.Add('Classe Exception: ' + E.ClassName);
-      Memo1.Lines.Add('Erro: ' + E.Message);
+      WriteMemoException(E);
       raise;
     end;
   end;
@@ -60,49 +64,55 @@ end;
 procedure TfExceptions.Button2Click(Sender: TObject);
 var
   i: Integer;
-  tempo: Integer;
+  LStopWatch: TStopWatch;
 begin
   Memo1.Lines.Clear;
   Memo2.Lines.Clear;
 
-  tempo := GetTickCount;
+  LStopWatch := TStopWatch.StartNew;
 
   for i := 0 to 7 do
-  begin
     LoadNumbers(i);
-  end;
 
-  Label1.Caption := 'Tempo de processamento: ' + tempo.ToString + ' ms';
+  LStopWatch.Stop;
+
+  Label1.Caption := 'Tempo de processamento: ' +
+    IntToStr(LStopWatch.ElapsedMilliseconds) + ' ms';
 end;
 
 procedure TfExceptions.FormCreate(Sender: TObject);
 begin
-  FPath := IncludeTrailingBackslash(ExtractFilePath(ParamStr(0))) + 'text.txt';
+  FPath := IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0))) +
+    'text.txt';
 end;
 
 function TfExceptions.LoadNumbers(AIgnore: Integer): Boolean;
 var
   st: TStringList;
-  i, y: Integer;
-  s: AnsiString;
+  s: String;
 begin
-  Result := False;
   st := TStringList.Create;
   st.LoadFromFile(FPath);
 
   try
-    for i := 0 to st.Count do
-    begin
-      s := st[i];
-      for y := 0 to Length(s) do
-        if not (s[y] = AIgnore.ToString) then
-          Memo2.Lines.Add(s[y]);
-    end;
+    s := st.Text;
+    Memo2.Lines.Add(StringReplace(s, IntToStr(AIgnore), '', [rfReplaceAll]));
   except
-    raise Exception.Create(Format('Erro ao tentar retirar número %d', [AIgnore]));
+    on E: Exception do
+    begin
+      WriteMemoException(E);
+      Memo1.Lines.Add(Format('Erro ao tentar retirar número %d', [AIgnore]));
+    end;
   end;
 
+  FreeAndNil(st);
   Result := True;
+end;
+
+procedure TfExceptions.WriteMemoException(E: Exception);
+begin
+  Memo1.Lines.Add('Classe Exception: ' + E.ClassName);
+  Memo1.Lines.Add('Erro: ' + E.Message);
 end;
 
 end.

@@ -11,10 +11,12 @@ object fDatasetCopy: TfDatasetCopy
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
-  object DBGrid1: TDBGrid
+  object dbgr1: TDBGrid
     Left = 8
     Top = 96
     Width = 320
@@ -26,7 +28,7 @@ object fDatasetCopy: TfDatasetCopy
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
   end
-  object DBGrid2: TDBGrid
+  object dbgr2: TDBGrid
     Left = 384
     Top = 96
     Width = 320
@@ -38,10 +40,10 @@ object fDatasetCopy: TfDatasetCopy
     TitleFont.Name = 'Tahoma'
     TitleFont.Style = []
   end
-  object DBNavigator1: TDBNavigator
+  object dbNav1: TDBNavigator
     Left = 8
     Top = 65
-    Width = 240
+    Width = 320
     Height = 25
     TabOrder = 2
   end

@@ -11,6 +11,7 @@ object fExceptions: TfExceptions
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -78,7 +79,7 @@ object fExceptions: TfExceptions
     Width = 473
     Height = 212
     Lines.Strings = (
-      'Memo1')
+      'Memo2')
     TabOrder = 4
   end
 end

@@ -8,15 +8,16 @@ uses
 
 type
   TfMain = class(TForm)
-    Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
-    Button4: TButton;
+    btnDataSetCopy: TButton;
+    btnDatasetLoop: TButton;
+    btnStreamns: TButton;
+    btnExceptionsPerfomance: TButton;
     Button5: TButton;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
+    procedure btnDataSetCopyClick(Sender: TObject);
+    procedure btnDatasetLoopClick(Sender: TObject);
+    procedure btnStreamnsClick(Sender: TObject);
+    procedure btnExceptionsPerfomanceClick(Sender: TObject);
+    procedure Button5Click(Sender: TObject);
   private
   public
   end;
@@ -27,28 +28,58 @@ var
 implementation
 
 uses
-  DatasetCopy, DatasetLoop, Streams, Exceptions;
+  DatasetCopy, DatasetLoop, Streams, Exceptions, Threads;
 
 {$R *.dfm}
 
-procedure TfMain.Button1Click(Sender: TObject);
+procedure TfMain.btnDataSetCopyClick(Sender: TObject);
 begin
-  fDatasetCopy.Show;
+  fDatasetCopy := TfDatasetCopy.Create(Self);
+  try
+    fDatasetCopy.ShowModal;
+  finally
+    FreeAndNil(fDatasetCopy);
+  end;
 end;
 
-procedure TfMain.Button2Click(Sender: TObject);
+procedure TfMain.btnDatasetLoopClick(Sender: TObject);
 begin
-  fDatasetLoop.Show;
+  fDatasetLoop := TfDatasetLoop.Create(Self);
+  try
+    fDatasetLoop.ShowModal;
+  finally
+    FreeAndNil(fDatasetLoop);
+  end;
 end;
 
-procedure TfMain.Button3Click(Sender: TObject);
+procedure TfMain.btnStreamnsClick(Sender: TObject);
 begin
-  fStreams.Show;
+  fStreams := TfStreams.Create(Self);
+  try
+    fStreams.ShowModal;
+  finally
+    FreeAndNil(fStreams);
+  end;
 end;
 
-procedure TfMain.Button4Click(Sender: TObject);
+procedure TfMain.Button5Click(Sender: TObject);
 begin
-  fExceptions.Show;
+  fThreads := TfThreads.Create(Self);
+  try
+    fThreads.ShowModal;
+  finally
+    FreeAndNil(fThreads);
+  end;
+end;
+
+procedure TfMain.btnExceptionsPerfomanceClick(Sender: TObject);
+begin
+  fExceptions := TfExceptions.Create(Self);
+  try
+    fExceptions.ShowModal;
+  finally
+    FreeAndNil(fExceptions);
+  end;
 end;
 
 end.

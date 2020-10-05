@@ -3,20 +3,24 @@ unit DatasetCopy;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Datasnap.DBClient, Vcl.Grids,
   Vcl.DBGrids, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.DBCtrls;
 
 type
   TfDatasetCopy = class(TForm)
-    DBGrid1: TDBGrid;
-    DBGrid2: TDBGrid;
-    DBNavigator1: TDBNavigator;
+    dbgr1: TDBGrid;
+    dbgr2: TDBGrid;
+    dbNav1: TDBNavigator;
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
   private
     FDataset1, FDataset2: TClientDataset;
     FDataSource1, FDataSource2: TDataSource;
 
+    procedure CloneDataSet(aDataSet_Clonar, aDataSet_Clonado
+      : TCustomClientDataSet; aReset: Boolean; aKeepSettings: Boolean = False);
     procedure InitDataset;
   public
   end;
@@ -27,6 +31,12 @@ var
 implementation
 
 {$R *.dfm}
+
+procedure TfDatasetCopy.CloneDataSet(aDataSet_Clonar, aDataSet_Clonado
+  : TCustomClientDataSet; aReset, aKeepSettings: Boolean);
+begin
+  aDataSet_Clonado.CloneCursor(aDataSet_Clonar, aReset, aKeepSettings);
+end;
 
 procedure TfDatasetCopy.FormCreate(Sender: TObject);
 begin
@@ -39,15 +49,23 @@ begin
   FDataSource1.DataSet := FDataset1;
   FDataSource2.DataSet := FDataset2;
 
-  DBGrid1.DataSource := FDataSource1;
-  DBGrid2.DataSource := FDataSource2;
+  dbgr1.DataSource := FDataSource1;
+  dbgr2.DataSource := FDataSource2;
 
   InitDataset;
 end;
 
+procedure TfDatasetCopy.FormDestroy(Sender: TObject);
+begin
+  FDataset1.Free;
+  FDataset2.Free;
+  FDataSource1.Free;
+  FDataSource2.Free;
+end;
+
 procedure TfDatasetCopy.InitDataset;
 begin
-  DBNavigator1.DataSource := FDataSource1;
+  dbNav1.DataSource := FDataSource1;
   FDataset1.Close;
   FDataset1.FieldDefs.Add('Field1', ftString, 20);
   FDataset1.FieldDefs.Add('Field2', ftInteger);
@@ -67,6 +85,8 @@ begin
   FDataset1.FieldByName('Field1').AsString := 'Field1Value3';
   FDataset1.FieldByName('Field2').AsInteger := 3;
   FDataset1.Post;
+
+  CloneDataSet(FDataset1, FDataset2, False, true);
 end;
 
 end.

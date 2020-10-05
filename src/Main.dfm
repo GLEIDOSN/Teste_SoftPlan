@@ -11,43 +11,44 @@ object fMain: TfMain
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poScreenCenter
   PixelsPerInch = 96
   TextHeight = 13
-  object Button1: TButton
+  object btnDataSetCopy: TButton
     Left = 64
     Top = 16
     Width = 169
     Height = 25
     Caption = 'Dataset Copy'
     TabOrder = 0
-    OnClick = Button1Click
+    OnClick = btnDataSetCopyClick
   end
-  object Button2: TButton
+  object btnDatasetLoop: TButton
     Left = 64
     Top = 47
     Width = 169
     Height = 25
     Caption = 'Dataset Loop'
     TabOrder = 1
-    OnClick = Button2Click
+    OnClick = btnDatasetLoopClick
   end
-  object Button3: TButton
+  object btnStreamns: TButton
     Left = 64
     Top = 79
     Width = 169
     Height = 25
     Caption = 'Streams'
     TabOrder = 2
-    OnClick = Button3Click
+    OnClick = btnStreamnsClick
   end
-  object Button4: TButton
+  object btnExceptionsPerfomance: TButton
     Left = 64
     Top = 111
     Width = 169
     Height = 25
     Caption = 'Exceptions/Performance'
     TabOrder = 3
-    OnClick = Button4Click
+    OnClick = btnExceptionsPerfomanceClick
   end
   object Button5: TButton
     Left = 64
@@ -56,5 +57,6 @@ object fMain: TfMain
     Height = 25
     Caption = 'Threads'
     TabOrder = 4
+    OnClick = Button5Click
   end
 end
