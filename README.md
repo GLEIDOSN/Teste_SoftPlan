@@ -31,14 +31,14 @@ Corrija cada defeito descrito abaixo. Cada seção corresponde à uma tela do pr
 
 Causa: Não existia nenhuma rotina para tal finalidade.
 
-Solução: Foi criada uma procedure chamada CloneDataSet onde recebe como parametros dois DataSets (aDataSet_Clonar e aDataSet_Clonado) e mais dois parametros booleanos
+Solução: Foi criada uma procedure chamada CloneDataSet onde recebe como parâmetros dois DataSets (aDataSet_Clonar e aDataSet_Clonado) e mais dois parâmetros booleanos
          para configuração da chamada da procedure CloneCursor do aDataSet_Clonado.
 
 ### Dataset Loop
 
 `Defeito 2: corrigir rotina que apaga números pares`
 
-Causa: Quando era encontrado um registro par, o mesmo era deletado e o dataset era ressincronizado porém o registro ativo passa a ser o próximo registro, desta forma não precisaria chamar o `Next` do Dataset
+Causa: Quando era encontrado um registro par, o mesmo era deletado e o dataset era ressincronizado porém o registro ativo passa a ser o próximo registro, desta forma não precisaria chamar o `next` do Dataset.
 
 Solução: Quando for deletado um registro, não será dado o `next`, assim não irá pular dois registros conforme explicado acima.
 
@@ -61,29 +61,29 @@ Solução: Retirado a variável TMemoryStream que é instanciada com o arquivo p
 
 `Defeito 5: melhorar performance do processamento quando utilizado o botão "Operação em lote". Esperado que a operação seja concluída em menos de 10s. (Manter a ordem original do texto é um plus)`
 
-Causa: Analisado o pedido de melhoria e foi verificado que dentro do método 'LoadNumbers' existe dois laços onde um percorre a linha e outro percorre cada caractere da linha, este segundo processo diminui a performance.
+Causa: Analisado o pedido de melhoria e foi verificado que dentro do método `LoadNumbers` existe dois laços onde um percorre a linha e outro percorre cada caractere da linha, este segundo processo diminui a performance.
 
-Solução: Retirado os dois laços do método 'LoadNumbers', carregado todo o arquivo de texto em uma variável string e ao adicionar no Memo o texto, foi utilizado o método 'StringReplace' para retirar de todo o texto
+Solução: Retirado os dois laços do método `LoadNumbers`, carregado todo o arquivo de texto em uma variável string e ao adicionar no Memo o texto, foi utilizado o método `StringReplace` para retirar de todo o texto
          o caractere passado por parâmetro.
 
 `Defeito 6: ao clicar no botão "Operação 1" está escondendo a exceção original. Alterar para mostrar a exceção correta no Memo1`
 
-Causa:  A função 'LoadNumbers' contém um tratamento de exceção porém a mesma já esta dentro de uma rotina que já contém este tratamento, desta forma quando uma exceção é disparada, o primeiro
-        tratamento capturado é o que esta dentro do método 'LoadNumbers' devido a isso está impedidndo a exeção original ser mostrada no memo1.
+Causa:  A função `LoadNumbers` contém um tratamento de exceção porém a mesma já esta dentro de uma rotina que já contém este tratamento, desta forma quando uma exceção é disparada, o primeiro
+        tratamento capturado é o que esta dentro do método `LoadNumbers` devido a isso está impedidndo a exeção original ser mostrada no memo1.
 
-Solução: Alterado o Exception da function 'LoadNumbers' para capturar o erro original e gravar no Memo1;
+Solução: Alterado o Exception da function `LoadNumbers` para capturar o erro original e gravar no Memo1;
 
 `Defeito 7: ao clicar em "Operação em lote" não deve parar o processamento caso dê erros na rotina. Caso apresente erros, suas classes (ClassName da exceção) e mensagens (Message da exceção) devem ser mostrados no fim do processamento, no Memo1. Exemplo: é feito um laço de 0 à 7. Caso dê erro quando i for igual a 1, deve continuar o processamento para o 2, e assim por diante.`
 
-Causa: Dentro do método 'LoadNumbers' existia uma exceção contendo raise, desta ao cair nesta exceção a aplicação dá um abort e assim não continuando.
+Causa: Dentro do método `LoadNumbers` existia uma exceção contendo raise, desta ao cair nesta exceção a aplicação dá um abort e assim não continuando.
 
 Solução:  Feito para ser inserido no Memo1 e alterado o Exception para on E: Exception sem o raise.
 
-`Defeito 8: substitua o "GetTickCount" por outra forma de "contar" o tempo de processamento`
+`Defeito 8: substitua o `GetTickCount` por outra forma de "contar" o tempo de processamento`
 
-Causa: Necessidade de substituir o "GetTickCount" que calcula o tempo gasto em uma determinada rotina 
+Causa: Necessidade de substituir o `GetTickCount` que calcula o tempo gasto em uma determinada rotina 
 
-Solução: Feito a substituição do "GetTickCount" por "TStopWatch", feito adição da unit System.Diagnostics
+Solução: Feito a substituição do `GetTickCount` por `TStopWatch`, feito adição da unit System.Diagnostics
 
 ### Threads
 
